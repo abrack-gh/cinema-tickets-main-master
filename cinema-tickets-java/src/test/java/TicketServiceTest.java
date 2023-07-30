@@ -5,6 +5,8 @@ import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 
 public class TicketServiceTest {
 
+    //100% method coverage
+
 
     TicketServiceImpl tktService = new TicketServiceImpl();
 

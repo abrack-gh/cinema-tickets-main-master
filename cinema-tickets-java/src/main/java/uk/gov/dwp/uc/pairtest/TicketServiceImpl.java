@@ -78,14 +78,18 @@ public class TicketServiceImpl implements TicketService {
         int childSeatsAndInfantSeats = childTicket + infantTicket;
 
         //Exceptions
+
+        //If more child seats are ordered than adult seats, reject purchase.
         if(childSeats > adultSeats){
             System.out.println("Cannot request more child seats than adult seats");
             throw new InvalidPurchaseException();
         }
+        //If more infant seats are ordered than adult seats, reject purchase.
         if(infantTicket > adultSeats){
             System.out.println("Cannot request more infant seats than adult seats");
             throw new InvalidPurchaseException();
         }
+        //If the total number of child and infant tickets are greater than the total number of adult tickets, reject purchase.
         if(childSeatsAndInfantSeats > adultTicket){
             System.out.println("Cannot request more infant or child seats than adult seats");
             throw new InvalidPurchaseException();
@@ -100,27 +104,11 @@ public class TicketServiceImpl implements TicketService {
         }
 
 
+        //Reserve seats and make payment.
 
         seatReservationService.reserveSeat(accountId, totalSeats);
         ticketPaymentService.makePayment(accountId, totalCost);
         System.out.println("Total seats reserved: " + totalSeatOrder + " Total tickets for: " + totalTicketOrder + " At a cost of: £" + totalCost);
-
-//        int totalPrice = ticketTypeRequests.length;
-//
-//        for(int j = 0; j < totalPrice; j+=20 ){
-//            if(ticketTypeRequests[j].getTicketType() == TicketTypeRequest.Type.ADULT){
-//                totalPrice++;
-//            }
-//        }
-//        for(int k = 0; k < totalPrice; k += 10){
-//            if(ticketTypeRequests[k].getTicketType() == TicketTypeRequest.Type.CHILD){
-//                totalPrice++;
-//            }
-//        }
-
-
-
-
 
     }
 
