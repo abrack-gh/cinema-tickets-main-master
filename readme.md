@@ -28,7 +28,7 @@
             - There is an existing `SeatReservationService` responsible for reserving seats.
 
 
-## Constraints
+Constraints
 
 - The TicketService interface CANNOT be modified. (For Java solution only)
 
@@ -36,7 +36,7 @@
 
             - The `TicketTypeRequest` SHOULD be an immutable object.
 
-## Assumptions
+Assumptions
 
     You can assume:
 
