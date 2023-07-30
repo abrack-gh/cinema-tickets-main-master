@@ -1,42 +1,16 @@
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.rules.ExpectedException;
-import org.mockito.Mock;
-import thirdparty.paymentgateway.TicketPaymentServiceImpl;
-import thirdparty.seatbooking.SeatReservationService;
-import org.junit.jupiter.api.BeforeAll;
-import thirdparty.seatbooking.SeatReservationServiceImpl;
 import uk.gov.dwp.uc.pairtest.TicketServiceImpl;
-import uk.gov.dwp.uc.pairtest.TktServiceImpl;
 import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
 import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 
-import static org.mockito.Mockito.mock;
-
 public class TicketServiceTest {
 
-    TicketPaymentServiceImpl ticketPaymentService = new TicketPaymentServiceImpl();
-    SeatReservationServiceImpl seatReservationService = new SeatReservationServiceImpl();
 
-    TktServiceImpl tktService = new TktServiceImpl();
-
-
-//    @BeforeAll
-//    void setUp(){
-//
-//        instance = new TktServiceImpl();
-//
-//    }
-    //Test Account Id exceptions
+    TicketServiceImpl tktService = new TicketServiceImpl();
 
     @Test(expected = InvalidPurchaseException.class)
     public void testIdIsNotZeroOrLess() {
-
         tktService.purchaseTickets(-1L);
-
     }
 
     @Test
@@ -51,9 +25,6 @@ public class TicketServiceTest {
         TicketTypeRequest adultRequest1 = new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1);
         TicketTypeRequest adultRequest2 = new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1);
         TicketTypeRequest childRequest = new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 1);
-
-        int adultReq = adultRequest.getNoOfTickets();
-        int childReq = childRequest.getNoOfTickets();
 
 
         tktService.purchaseTickets(2L, adultRequest, adultRequest1, adultRequest, childRequest);
@@ -80,6 +51,18 @@ public class TicketServiceTest {
         TicketTypeRequest infantRequest1 = new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1);
 
         tktService.purchaseTickets(2L, adultRequest, infantRequest, infantRequest1);
+
+
+    }
+
+    @Test(expected = InvalidPurchaseException.class)
+    public void oneInfantOneChildOneAdult(){
+
+        TicketTypeRequest adultRequest = new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1);
+        TicketTypeRequest childRequest = new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 1);
+        TicketTypeRequest infantRequest = new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1);
+
+        tktService.purchaseTickets(2L, adultRequest, childRequest, infantRequest);
 
 
     }
